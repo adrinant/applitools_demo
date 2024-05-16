@@ -11,6 +11,8 @@ import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 
 public class TestCase {
     private static WebDriver driver;
@@ -21,9 +23,14 @@ public class TestCase {
 
     @BeforeAll
     public static void beforeAll() {
-        driver = WebDriverManager.chromedriver().create();
+        WebDriverManager.chromedriver().setup();
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--remote-allow-origins=*");
+        driver = new ChromeDriver(options);
+
         myTestBatch = new BatchInfo("Test Cases");
         myTestBatch.setSequenceName("My Batch Sequence");
+        myTestBatch.setNotifyOnCompletion(true);
         testRunner = new VisualGridRunner(new RunnerOptions().testConcurrency(5));
 
         suiteConfig = new Configuration();
