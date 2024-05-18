@@ -12,6 +12,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
 import java.util.Random;
@@ -25,9 +26,10 @@ public class TestCase {
 
     @BeforeAll
     public static void beforeAll() {
-        ChromeOptions chromeOptions = new ChromeOptions();
-        chromeOptions.addArguments("--headless");
-        driver = WebDriverManager.chromedriver().capabilities(chromeOptions).create();
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--remote-allow-origins=*");
+        driver = new ChromeDriver(options);
+
         myTestBatch = new BatchInfo("Test Cases");
         testRunner = new VisualGridRunner(new RunnerOptions().testConcurrency(5));
         suiteConfig = new Configuration();
